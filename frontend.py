@@ -1,6 +1,7 @@
 import gradio as gr
-from main import MLListening
+from model import MLListening
 from basic_pitch import ICASSP_2022_MODEL_PATH
+import webbrowser
 import time
 
 class GradioInterface:
@@ -40,4 +41,7 @@ if __name__ == "__main__":
     threading.Thread(target=app.start_transcription, daemon=True).start()
 
     gradio_app = GradioInterface(app)
-    gradio_app.create_interface().launch()
+    gradio_app.create_interface().launch(server_port=7860)
+    
+    # open the Gradio interface in a web browser
+    webbrowser.open("http://localhost:7860", new=2)  # Open in a new tab

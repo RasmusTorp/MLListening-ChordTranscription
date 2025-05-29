@@ -14,7 +14,8 @@ from pychord import find_chords_from_notes
 class MLListening:
     def __init__(self, basic_pitch_path, midi_bus, channels=1, sample_rate=22050, 
                 block_seconds=1.0, chord_seconds=0.1, repeat_same_chord=True, 
-                midi_offset=60):
+                midi_offset=60,
+                minimum_velocity=40):
         self.midi_bus = midi_bus
         self.channels = channels
         self.sample_rate = sample_rate
@@ -28,13 +29,13 @@ class MLListening:
         self.current_chord = None  # Store the current chord
         
         self.note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    
         
         self.midi_port = mido.open_output(midi_bus)  # Your IAC virtual port name
         self.audio_queue = queue.Queue()
         self.basic_pitch_model = Model(basic_pitch_path)
         
         self.currently_playing_midi = set()  # Track currently playing MIDI notes
+        self.minimum_velocity = minimum_velocity  # Minimum velocity for MIDI notes
         
     def start_transcription(self):
         threading.Thread(target=self.transcription_loop, daemon=True).start()
@@ -82,7 +83,7 @@ class MLListening:
             if note < 0 or note > 127:
                 continue
             
-            self.midi_port.send(Message('note_off', note=note, velocity=80))
+            self.midi_port.send(Message('note_off', note=note, velocity=self.current_velocity))
         
         self.currently_playing_midi = set(midi_notes)  # Update currently playing notes
         
@@ -92,7 +93,7 @@ class MLListening:
             if note < 0 or note > 127:
                 continue
             
-            self.midi_port.send(Message('note_on', note=note, velocity=80))
+            self.midi_port.send(Message('note_on', note=note))
             
         #raise NotImplementedError("This method should be implemented to send MIDI messages to the MIDI bus.")
     
@@ -110,6 +111,10 @@ class MLListening:
     def audio_callback(self, indata, frames, time_info, status):
         audio = indata[:, 0]
         self.audio_queue.put(audio.copy())
+        
+    def velocity_float_to_int_repr(self, velocity_float):
+        # Convert float velocity (0.0 to 1.0) to int representation (0 to 127)
+        return int(velocity_float * 127)
 
     def transcription_loop(self):
         print("Basic Pitch inference thread started")
@@ -129,7 +134,11 @@ class MLListening:
             #! TODO: Send MIDI data to the MIDI bus
             # Extract MIDI pitches from note_events
             pitches = sorted(set([int(note[2]) for note in note_events]))
+            
             note_names = sorted(set([self.note_number_to_name(p) for p in pitches]))
+            velocities = sorted(set([self.velocity_float_to_int_repr(note[3]) for note in note_events]))
+            
+            
             # Send root note + chord tones as MIDI
             if note_names:
                 chords = find_chords_from_notes(note_names)
@@ -139,8 +148,10 @@ class MLListening:
                     if self.current_chord == detected_chord and not self.repeat_same_chord:
                         continue
                     
+                    self.current_velocity = max(int(np.mean(np.array(velocities))), self.minimum_velocity) if velocities else 80
                     self.current_chord = detected_chord
-                    print(f"Detected chord: {detected_chord}")
+                    print(f"Detected chord: {detected_chord}, velocity: {self.current_velocity}")
+                    
                     
                     chord_components = chords[0].components()
                     
@@ -151,18 +162,7 @@ class MLListening:
                     
                     # self.send_midi_chord(midi_notes)
                     self.send_midi_pad(midi_notes)
-                    # for note in midi_notes:
-                    #     if note is None:
-                    #         continue
-                    #     if note < 0 or note > 127:
-                    #         continue
-                    #     self.midi_port.send(Message('note_on', note=note, velocity=80))
-                    
-                    # time.sleep(self.chord_seconds)
-                    
-                    
-                    # self.midi_port.send(Message('note_off', note=midi_notes, velocity=80))
-                    
+
                     
             #self.send_midi_messages(midi_data) #! TODO: Test this
             
@@ -181,15 +181,15 @@ if __name__ == "__main__":
     
     chords = [[60, 64, 67], [62, 65, 69], [64, 67, 71]]  # Example chords in MIDI note numbers
     
-    i = 0
-    while True:
+    # i = 0
+    # while True:
         
-        i += 1
-        if i == len(chords):
-            i = 0
+    #     i += 1
+    #     if i == len(chords):
+    #         i = 0
             
-        app.send_midi_pad(chords[i])  # Send C4, E4, G4 as an example chord
-        time.sleep(4)
-        print("Sending MIDI messages...")
+    #     app.send_midi_pad(chords[i])  # Send C4, E4, G4 as an example chord
+    #     time.sleep(4)
+    #     print("Sending MIDI messages...")
     
-    # app.start_transcription()
+    app.start_transcription()
