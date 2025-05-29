@@ -4,7 +4,7 @@ from basic_pitch import ICASSP_2022_MODEL_PATH
 import webbrowser
 import time
 import threading
-import argparse  # <-- Add this import
+import argparse
 
 class GradioInterface:
     def __init__(self, ml_listening):
