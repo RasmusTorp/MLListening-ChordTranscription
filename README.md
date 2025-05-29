@@ -56,7 +56,11 @@ You’ll see "Listening..." in the terminal. Start playing your instrument — M
 
 ---
 
-## 📝 Credits
+## 🔊 Listen on SoundCloud
+An example of improvisation in tandem with this ML listening application!
+[![Listen on SoundCloud](https://img.shields.io/badge/SoundCloud-Click%20to%20Listen-orange?logo=soundcloud)](https://soundcloud.com/rasmustorp-ai/ml_listening)
+
+## Credits
 
 Built using:
 - [Basic Pitch](https://github.com/spotify/basic-pitch) by Spotify
