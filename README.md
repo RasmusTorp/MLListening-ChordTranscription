@@ -1,4 +1,4 @@
-# 🎸 Real-Time Guitar Chord to MIDI Transcriber
+# Real-Time Guitar Chord to MIDI Transcriber
 
 This project listens to live guitar input, uses Spotify’s [Basic Pitch](https://github.com/spotify/basic-pitch) to transcribe notes, and sends them as MIDI messages to a virtual MIDI port (e.g., for use in Ableton Live).
 
@@ -6,7 +6,7 @@ Ideal for triggering synth pads or harmonies live with your guitar.
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 - Captures audio from your guitar in real time.
 - Transcribes pitches using the **Basic Pitch** deep learning model.
@@ -15,7 +15,7 @@ Ideal for triggering synth pads or harmonies live with your guitar.
 
 ---
 
-## 🧰 Requirements
+## Requirements
 
 - macOS with **IAC Driver** enabled (for virtual MIDI ports).
 - Conda (recommended for managing Python version).
@@ -32,21 +32,9 @@ conda activate guitar-midi
 pip install -r requirements.txt
 ```
 
-**requirements.txt**
-```txt
-sounddevice
-numpy
-basic-pitch
-mido
-python-rtmidi
-torch
-torchaudio
-soundfile
-```
-
 ---
 
-## 🎹 Set Up MIDI Routing
+## Set Up MIDI Routing
 
 1. Open **Audio MIDI Setup** → **MIDI Studio**.
 2. Enable the **IAC Driver**.
@@ -58,18 +46,12 @@ soundfile
 ## 🚀 Run the App
 
 ```bash
-python main.py
+python frontend.py
 ```
 
+Open port 7680 in your browser to see the transcribed chords.
+
 You’ll see "Listening..." in the terminal. Start playing your guitar — MIDI notes will be sent as chords to your DAW.
-
----
-
-## 📦 Todo / Extensions
-
-- Chord labeling (e.g., Cmaj, Am7)
-- Sustain logic (hold chord until new one is detected)
-- CLI controls (e.g., freeze, retrigger manually)
 
 ---
 
@@ -77,5 +59,3 @@ You’ll see "Listening..." in the terminal. Start playing your guitar — MIDI 
 
 Built using:
 - [Basic Pitch](https://github.com/spotify/basic-pitch) by Spotify
-- [SoundDevice](https://python-sounddevice.readthedocs.io/)
-- [Mido + RtMidi](https://mido.readthedocs.io/)
