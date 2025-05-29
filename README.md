@@ -1,6 +1,6 @@
 # Real-Time Instrument Chord to MIDI Transcriber
 
-This project listens to live instrument input, uses Spotify’s [Basic Pitch](https://github.com/spotify/basic-pitch) to transcribe notes, and sends them as MIDI messages to a virtual MIDI port (e.g., for use in Ableton Live).
+This project listens to live instrument input, uses Spotify’s [Basic Pitch](https://github.com/spotify/basic-pitch) to transcribe notes, infers the underlying harmony, and sends it as MIDI messages to a virtual MIDI port (e.g., for use in Ableton Live).
 
 Ideal for triggering synth pads or harmonies live with your instrument.
 
