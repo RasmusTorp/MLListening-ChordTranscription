@@ -10,14 +10,15 @@ Ideal for triggering synth pads or harmonies live with your instrument.
 
 - Captures audio from your instrument in real time.
 - Transcribes pitches using the **Basic Pitch** deep learning model.
-- Sends detected notes via **MIDI** to an IAC virtual port on macOS.
+- From the pitches it derives which chord if any is being played.
+- Sends the detected chord via **MIDI** to an IAC virtual port.
 - Allows you to drive instruments in DAWs like **Ableton Live** with your instrument.
 
 ---
 
 ## Requirements
 
-- macOS with **IAC Driver** enabled (for virtual MIDI ports).
+- Virtual midi ports **IAC Driver** enabled (for virtual MIDI ports).
 - Conda (recommended for managing Python version).
 - Ableton Live or any DAW that can receive MIDI.
 
