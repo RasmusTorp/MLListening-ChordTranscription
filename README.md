@@ -23,7 +23,7 @@ Ideal for triggering synth pads or harmonies live with your guitar.
 
 ---
 
-## 🐍 Setup (Python 3.10 via Conda)
+## Setup (Python 3.10 via Conda)
 
 ```bash
 conda create -n guitar-midi python=3.10
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Run the App
+## Run the App
 
 ```bash
 python frontend.py
