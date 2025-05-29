@@ -3,6 +3,8 @@ from model import MLListening
 from basic_pitch import ICASSP_2022_MODEL_PATH
 import webbrowser
 import time
+import threading
+import argparse  # <-- Add this import
 
 class GradioInterface:
     def __init__(self, ml_listening):
@@ -26,22 +28,29 @@ class GradioInterface:
         return demo
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Real-time Chord Transcription Frontend")
+    parser.add_argument("--midi_bus", type=str, default="IAC Driver ML_listening", help="MIDI bus name")
+    parser.add_argument("--channels", type=int, default=1, help="Number of audio channels")
+    parser.add_argument("--sample_rate", type=int, default=22050, help="Audio sample rate")
+    parser.add_argument("--block_seconds", type=float, default=1.0, help="Block size in seconds")
+    parser.add_argument("--repeat_same_chords", action="store_true", help="Repeat same chord in output (default: False)")
+    parser.add_argument("--midi_offset", type=int, default=60, help="MIDI offset")
+    parser.add_argument("--port", type=int, default=7860, help="Gradio server port")
+    args = parser.parse_args()
+    
     app = MLListening(
             basic_pitch_path=ICASSP_2022_MODEL_PATH,
-            midi_bus="IAC Driver ML_listening",
-            channels=1,
-            sample_rate=22050,
-            block_seconds=1.0,
-            chord_seconds=0.0,
-            repeat_same_chord=False,
-            midi_offset=60
+            midi_bus=args.midi_bus,
+            channels=args.channels,
+            sample_rate=args.sample_rate,
+            block_seconds=args.block_seconds,
+            repeat_same_chords=args.repeat_same_chords,
+            midi_offset=args.midi_offset
             )
-    # Start transcription in a background thread
-    import threading
+
     threading.Thread(target=app.start_transcription, daemon=True).start()
 
     gradio_app = GradioInterface(app)
     gradio_app.create_interface().launch(server_port=7860)
-    
-    # open the Gradio interface in a web browser
+
     webbrowser.open("http://localhost:7860", new=2)  # Open in a new tab
