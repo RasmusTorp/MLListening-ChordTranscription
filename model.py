@@ -40,6 +40,7 @@ class MLListening:
         
         self.currently_playing_midi = set()  # Track currently playing MIDI notes
         self.minimum_velocity = minimum_velocity  # Minimum velocity for MIDI notes
+        self.current_velocity = 80  # Default velocity for MIDI notes
         
     def start_transcription(self):
         threading.Thread(target=self.transcription_loop, daemon=True).start()
@@ -101,7 +102,6 @@ class MLListening:
         return int(velocity_float * 127)                    
                     
     def send_midi_pad(self, midi_notes):
-        
         # Stops currently playing MIDI notes
         for note in self.currently_playing_midi:
             if note is None:
@@ -145,7 +145,7 @@ class MLListening:
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Real-time Chord Transcription Frontend")
-    parser.add_argument("--midi_bus", type=str, default="IAC Driver ML_listening", help="MIDI bus name")
+    parser.add_argument("--midi_bus", type=str, default="IAC Driver Bus 1", help="MIDI bus name")
     parser.add_argument("--channels", type=int, default=1, help="Number of audio channels")
     parser.add_argument("--sample_rate", type=int, default=22050, help="Audio sample rate")
     parser.add_argument("--block_seconds", type=float, default=1.0, help="Block size in seconds")

@@ -29,7 +29,7 @@ class GradioInterface:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Real-time Chord Transcription Frontend")
-    parser.add_argument("--midi_bus", type=str, default="IAC Driver ML_listening", help="MIDI bus name")
+    parser.add_argument("--midi_bus", type=str, default="IAC Driver Bus 1", help="MIDI bus name")
     parser.add_argument("--channels", type=int, default=1, help="Number of audio channels")
     parser.add_argument("--sample_rate", type=int, default=22050, help="Audio sample rate")
     parser.add_argument("--block_seconds", type=float, default=1.0, help="Block size in seconds")
