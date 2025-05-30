@@ -35,12 +35,11 @@ pip install -r requirements.txt
 
 ---
 
-## Set Up MIDI Routing
+## Set Up MIDI Routing (MacOS)
 
 1. Open **Audio MIDI Setup** → **MIDI Studio**.
 2. Enable the **IAC Driver**.
-3. Create a port named `ML_listening`.
-4. In **Ableton Live**, set `ML_listening` as a MIDI input on a track with a synth/pad.
+3. Connect your bus as a MIDI input on a track with a synth/pad.
 
 ---
 
@@ -54,6 +53,17 @@ Open port 7680 in your browser to see the transcribed chords.
 
 You’ll see "Listening..." in the terminal. Start playing your instrument — MIDI notes will be sent as chords to your DAW.
 
+## Command-line Arguments
+
+| Argument             | Type    | Default                | Description                                   |
+|----------------------|---------|------------------------|-----------------------------------------------|
+| `--midi_bus`         | string  | `IAC Driver Bus 1` | MIDI bus name to listen to                    |
+| `--channels`         | int     | `1`                    | Number of audio channels                      |
+| `--sample_rate`      | int     | `22050`                | Audio sample rate                             |
+| `--block_seconds`    | float   | `1.0`                  | Block size in seconds                         |
+| `--repeat_same_chords` | flag | `False`                | Repeat same chord in output (set flag to enable) |
+| `--midi_offset`      | int     | `60`                   | MIDI offset                                   |
+| `--port`             | int     | `7860`                 | Gradio server port                            |
 ---
 
 ## 🔊 Listen on SoundCloud
