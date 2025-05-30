@@ -27,8 +27,8 @@ Ideal for triggering synth pads or harmonies live with your instrument.
 ## Setup (Python 3.10 via Conda)
 
 ```bash
-conda create -n instrument-midi python=3.10
-conda activate instrument-midi
+conda create -n ENV_NAME python=3.10
+conda activate ENV_NAME
 
 pip install -r requirements.txt
 ```
