@@ -1,6 +1,6 @@
 # Real-Time Instrument Chord to MIDI Transcriber
 
-This project listens to live instrument input, uses Spotify’s [Basic Pitch](https://github.com/spotify/basic-pitch) to transcribe notes, infers the underlying harmony, and sends it as MIDI messages to a virtual MIDI port (e.g., for use in Ableton Live).
+This project listens to live instrument input, uses Spotify’s [Basic Pitch](https://github.com/spotify/basic-pitch) to transcribe notes, infers the underlying harmony, and sends it as MIDI messages to a virtual MIDI port (e.g., for use in Ableton Live, Logic, any DAW).
 
 Ideal for triggering synth pads or harmonies live with your instrument.
 
@@ -51,19 +51,19 @@ python frontend.py
 
 Open port 7680 in your browser to see the transcribed chords.
 
-You’ll see "Listening..." in the terminal. Start playing your instrument — MIDI notes will be sent as chords to your DAW.
+You’ll see "Listening..." in the terminal. Start playing your instrument — MIDI notes will be sent as chords to your MIDI-bus/DAW.
 
 ## Command-line Arguments
 
 | Argument             | Type    | Default                | Description                                   |
 |----------------------|---------|------------------------|-----------------------------------------------|
-| `--midi_bus`         | string  | `IAC Driver Bus 1` | MIDI bus name to listen to                    |
+| `--midi_bus`         | string  | `IAC Driver Bus 1`     | MIDI bus name to listen to                    |
 | `--channels`         | int     | `1`                    | Number of audio channels                      |
 | `--sample_rate`      | int     | `22050`                | Audio sample rate                             |
 | `--block_seconds`    | float   | `1.0`                  | Block size in seconds                         |
-| `--repeat_same_chords` | flag | `False`                | Repeat same chord in output (set flag to enable) |
-| `--midi_offset`      | int     | `60`                   | MIDI offset                                   |
-| `--port`             | int     | `7860`                 | Gradio server port                            |
+| `--repeat_same_chords` | flag | `False`                 | Repeat same chord in output (set flag to enable) |
+| `--midi_offset`      | int     | `60`                   | Which MIDI note to start the transcription (Must be a C note if you want the correct chord) |
+| `--port`             | int     | `7860`                 | Local server port                            |
 ---
 
 ## 🔊 Listen on SoundCloud
