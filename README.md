@@ -74,3 +74,4 @@ An example of improvisation in tandem with this ML listening application!
 
 Built using:
 - [Basic Pitch](https://github.com/spotify/basic-pitch) by Spotify
+- [PyChord](https://github.com/yuma-m/pychord)
