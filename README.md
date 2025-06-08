@@ -26,10 +26,16 @@ Ideal for triggering synth pads or harmonies live with your instrument.
 
 ## Setup (Python 3.10 via Conda)
 
+
+#### Setup environment
 ```bash
 conda create -n ENV_NAME python=3.10
 conda activate ENV_NAME
+```
 
+
+#### Install dependencies
+```
 pip install -r requirements.txt
 ```
 
@@ -39,7 +45,8 @@ pip install -r requirements.txt
 
 1. Open **Audio MIDI Setup** → **MIDI Studio**.
 2. Enable the **IAC Driver**.
-3. Connect your bus as a MIDI input on a track with a synth/pad.
+3. Make sure the midi_bus variable is set appropriately for your system (default is "IAC Driver Bus 1")
+4. Connect your bus as a MIDI input on a track with a synth/pad.
 
 ---
 
